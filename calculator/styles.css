@@ -1,0 +1,78 @@
+*{
+    box-sizing: border-box;
+    font-weight: normal;
+    font-family: 'Fjalla One', sans-serif;;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+}
+
+/* --------------Main frame-------------------- */
+#main-grid{
+    position: absolute;
+    width: 500px;
+    height: 650px;
+    left: 480px;
+    top: 70px;
+    background-color: lightgrey;
+
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    grid-template-columns: repeat(4, 100px);
+    grid-template-rows: minmax(100px, auto) repeat(5, 100px);
+    border-radius: 8px;
+}
+
+#main-grid > button{
+    cursor: pointer;
+    font-size: 2rem;
+    outline: none;
+    border-style: none;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+}
+
+
+#output{
+    grid-column: 1/-1;
+    background: #53747b;
+    display: flex;
+    align-items: flex-end;
+    border-radius: 8px;
+    flex-direction: column;
+    padding: 30px;
+}
+
+#output #previous-operand {
+    color: rgba(255, 255, 255, .75);
+    font-size: 1.5rem;
+}
+
+#output #current-operand {
+    color: white;
+    font-size: 2rem;
+}
+
+
+/* --------------Buttons-------------------- */
+.op-btn{
+    background-color: #7FE5FC;
+}
+
+.num-btn{
+    background-color: #A6F1CD;
+}
+
+button:hover{
+    background-color: white;
+    color: purple;
+    transition: 0.5s;
+}
+
+.two-row-btn{
+    grid-column: span 2;
+}
