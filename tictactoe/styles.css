@@ -1,0 +1,50 @@
+*{
+    box-sizing: border-box;
+    font-family: 'Varela Round', sans-serif;
+}
+
+.game-result{
+    display: none;
+}
+/*--------------Board---------------------*/
+
+table{
+    border-collapse: collapse;
+    position: absolute;
+}
+
+#container{
+    display: flex;
+    justify-content:center;
+    align-items:center;
+
+    background-color: rebeccapurple;
+    margin-left: 400px;
+    margin-top: 30px;
+    padding: 100px;
+    border-radius: 8px;
+    width: 665px;
+    height: 665px;
+
+    color: white;
+    font-size: 100px;
+}
+
+
+/*--------------Cells---------------------*/
+td{
+    border: 3px solid white;
+    height: 200px;
+    width: 200px;
+    text-align: center;
+    vertical-align: middle;
+
+    cursor: pointer;
+}
+
+td .cell{
+    padding: 10px;
+}
+
+
+
