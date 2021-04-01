@@ -11,51 +11,51 @@ document.addEventListener('DOMContentLoaded', () =>{
     const cards = [
         {
             name: 'alien',
-            img: 'images/alien.jpg'
+            img: 'images/alien.png'
         },
         {
             name: 'banana',
-            img: 'images/banana.jpg'
+            img: 'images/banana.png'
         },
         {
             name: 'book',
-            img: 'images/book.jpg'
+            img: 'images/goose.png'
         },
         {
             name: 'cat',
-            img: 'images/cat.jpg'
+            img: 'images/cat.png'
         },
         {
             name: 'donut',
-            img: 'images/donut.jpg'
+            img: 'images/donut.png'
         },
         {
             name: 'fries',
-            img: 'images/fries.jpg'
+            img: 'images/fries.png'
         },
         {
             name: 'alien',
-            img: 'images/alien.jpg'
+            img: 'images/alien.png'
         },
         {
             name: 'banana',
-            img: 'images/banana.jpg'
+            img: 'images/banana.png'
         },
         {
             name: 'book',
-            img: 'images/book.jpg'
+            img: 'images/goose.png'
         },
         {
             name: 'cat',
-            img: 'images/cat.jpg'
+            img: 'images/cat.png'
         },
         {
             name: 'donut',
-            img: 'images/donut.jpg'
+            img: 'images/donut.png'
         },
         {
             name: 'fries',
-            img: 'images/fries.jpg'
+            img: 'images/fries.png'
         }
     ]
     // randomizing our cards
@@ -66,12 +66,15 @@ document.addEventListener('DOMContentLoaded', () =>{
     function initBoard(){
         for(let i = 0; i < cards.length; i++){
             var card = document.createElement('img');
-            card.setAttribute('src', 'images/back.jpg');
+            card.setAttribute('src', 'images/back.png');
             // set an attribute for card element on the board
             card.setAttribute('data-id', i);
+            card.setAttribute('class', 'card');
             card.addEventListener('click', flip);
             board.appendChild(card);
         }
+
+        $( ".card" ).wrap( "<div class='grid-item'></div>" );
     }
 
     // check matches
@@ -81,21 +84,21 @@ document.addEventListener('DOMContentLoaded', () =>{
         const secondCardID = guessedCardsIDs[1];
 
         if(firstCardID == secondCardID){
-            allCards[firstCardID].setAttribute('src', 'images/back.jpg');
-            allCards[secondCardID].setAttribute('src', 'images/back.jpg');
+            allCards[firstCardID].setAttribute('src', 'images/back.png');
+            allCards[secondCardID].setAttribute('src', 'images/back.png');
             alert('it is the same card');
         }
         else if(guessedCards[0] === guessedCards[1]){
             alert('Match!');
-            allCards[firstCardID].setAttribute('src', '');
-            allCards[secondCardID ].setAttribute('src', '');
+            allCards[firstCardID].setAttribute('src', 'images/blank.png');
+            allCards[secondCardID ].setAttribute('src', 'images/blank.png');
             allCards[firstCardID].removeEventListener('click', flip);
             allCards[secondCardID].removeEventListener('click', flip);
             winCards.push(guessedCards);
         }
         else{
-            allCards[firstCardID].setAttribute('src', 'images/back.jpg');
-            allCards[secondCardID].setAttribute('src', 'images/back.jpg');
+            allCards[firstCardID].setAttribute('src', 'images/back.png');
+            allCards[secondCardID].setAttribute('src', 'images/back.png');
             alert('no match');
         }
 
