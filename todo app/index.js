@@ -11,6 +11,21 @@ window.onload = function(){
     submitBtn.addEventListener('click', addToDoItem);
     clearBtn.addEventListener('click', clearList);
 
+    function createRemoveButton(){
+        let removeBtn = document.createElement("button");
+        removeBtn.setAttribute("class", "remove-btn btn btn-outline-danger ");
+        removeBtn.innerHTML = "Remove";
+        removeBtn.addEventListener('click', removeItem);
+        return removeBtn;
+    }
+
+    function createDoneButton(){
+        let doneBtn = document.createElement("button");
+        doneBtn.setAttribute("class", "done-btn btn btn-outline-success ");
+        doneBtn.innerHTML = "Done";
+        doneBtn.addEventListener('click', makeDone);
+        return doneBtn;
+    }
 
 
     (function loadList(){        
@@ -22,9 +37,7 @@ window.onload = function(){
 
         taskList.push(savedTasks);
         // toDoList.innerHTML = savedTasks;
-     
         var re = /\s*,\s*/;
-
         // check if splited text equals to input text
         var splittedList = taskList[0].split(re);
 
@@ -34,23 +47,17 @@ window.onload = function(){
             let li = document.createElement("li");
             li.appendChild(document.createTextNode(splittedList[i]));
 
-            var removeBtn = document.createElement("button");
-            removeBtn.setAttribute("class", "remove-btn");
-            removeBtn.innerHTML = "Remove";
-            removeBtn.addEventListener('click', makeDone);
-    
-            var doneBtn = document.createElement("button");
-            doneBtn.setAttribute("class", "done-btn");
-            doneBtn.innerHTML = "Done";
-            doneBtn.addEventListener('click', removeItem);
+            let removebtn = createRemoveButton();
+            removebtn.classList.add(`delete-${i}`);
 
-            li.appendChild(removeBtn); 
-            li.appendChild(doneBtn); 
+            let donebtn = createDoneButton();
+            donebtn.classList.add(`done-${i}`);
+
+            li.appendChild(removebtn); 
+            li.appendChild(donebtn); 
             li.setAttribute("class", "todo-item");
             // append complete li to ul
             toDoList.appendChild(li);
-           
-
         }
     })();
 
@@ -73,23 +80,12 @@ window.onload = function(){
         li.appendChild(document.createTextNode(text));
 
         // create remove button
-        var removeBtn = document.createElement("button");
-        removeBtn.setAttribute("class", "remove-btn");
-        removeBtn.innerHTML = "Remove";
-        removeBtn.addEventListener('click', makeDone);
-
-        var doneBtn = document.createElement("button");
-        doneBtn.setAttribute("class", "done-btn");
-        doneBtn.innerHTML = "Done";
-        doneBtn.addEventListener('click', removeItem);
-
-        li.appendChild(removeBtn); 
-        li.appendChild(doneBtn); 
+        li.appendChild(createRemoveButton()); 
+        li.appendChild(createDoneButton()); 
         li.setAttribute("class", "todo-item");
 
         // append complete li to ul
         toDoList.appendChild(li);
-
         // push task to array
         taskList.push(text);
         //store array to a local storage called tasks
@@ -102,7 +98,6 @@ window.onload = function(){
         const listItems = document.querySelectorAll(".todo-item");
         // split text and button
         var re = /\s*<\s*/;
-
         // check if splited text equals to input text
         listItems.forEach(item => {
             if(inputText.value === item.innerHTML.split(re)[0]){
@@ -130,8 +125,22 @@ window.onload = function(){
 
     function removeItem(){
         if (confirm('Are you sure you want to remove this item?')) {
-            // clear the list
-          
+            // remove
+            var re = /\s*,\s*/;
+            var splittedList = taskList[0].split(re);
+            taskList = splittedList;
+
+            for(var i = 0; i < splittedList.length; i++){
+                console.log("i = " + i);
+
+                if(this.classList.contains(`delete-${i}`)){  
+                    toDoList.removeChild(toDoList.children[i]);
+                    taskList.splice(i, 1);
+                    window.localStorage.setItem("tasks", taskList);
+
+                    return;
+                }
+            }
         } else {
             // Do nothing
             return;
@@ -139,7 +148,13 @@ window.onload = function(){
     }
 
     function makeDone(){
-
+        if (confirm('Mark as done?')) {
+            
+            
+        } else {
+            // Do nothing
+            return;
+        }
     }
 
 }

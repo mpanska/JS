@@ -8,6 +8,23 @@ ul{
     padding: 10px;
 }
 
-.inputs-conteiner{
+.inputs-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px;
+    padding: 10px;
+}
+
+.items-container{
+    display: flex;
+ 
+    justify-content: center;
+    margin: 10px;
+    padding: 10px;
+}
+
+input[type=button], button{
     margin: 10px;
 }
+
