@@ -1,0 +1,13 @@
+body{
+    font-family: 'Poppins', sans-serif;
+}
+
+
+ul{
+    list-style: none;
+    padding: 10px;
+}
+
+.inputs-conteiner{
+    margin: 10px;
+}
