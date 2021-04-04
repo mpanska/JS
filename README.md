@@ -1,2 +1,2 @@
-# JS
-for javaScript practice projects
+# JS practice
+for javaScript practice
