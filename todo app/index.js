@@ -3,10 +3,12 @@ window.onload = function(){
     const clearBtn = document.getElementById('clear-list-btn');
     const inputText = document.getElementById('to-do');
     const toDoList = document.getElementById('to-do-list');
+    const doneList = document.getElementById('done-list');
     var ducpicate = false;
 
     //array to store task
     var taskList = Array();
+    var doneToDoList = Array();
 
     submitBtn.addEventListener('click', addToDoItem);
     clearBtn.addEventListener('click', clearList);
@@ -31,18 +33,13 @@ window.onload = function(){
     (function loadList(){        
         var savedTasks = window.localStorage.getItem("tasks");
         //push task to array so we dont over write old tasks the next time
-        if(savedTasks.length === 0){
-            return;
-        }
-
+        if(savedTasks.length === 0) return;
+        
         taskList.push(savedTasks);
-        // toDoList.innerHTML = savedTasks;
         var re = /\s*,\s*/;
         // check if splited text equals to input text
         var splittedList = taskList[0].split(re);
 
-        console.log(splittedList);
-           
         for(let i = 0; i < splittedList.length; i++){
             let li = document.createElement("li");
             li.appendChild(document.createTextNode(splittedList[i]));
@@ -58,6 +55,29 @@ window.onload = function(){
             li.setAttribute("class", "todo-item");
             // append complete li to ul
             toDoList.appendChild(li);
+        }
+    })();
+
+    (function loadDone(){        
+        var doneTasks = window.localStorage.getItem("doneTasks");
+        //push task to array so we dont over write old tasks the next time
+        if(doneTasks === null){
+            return;
+        }
+
+        doneToDoList.push(doneTasks);
+
+        var re = /\s*,\s*/;
+        // check if splited text equals to input text
+        var splittedList = doneToDoList[0].split(re);
+
+        for(let i = 0; i < splittedList.length; i++){
+            let li = document.createElement("li");
+            li.appendChild(document.createTextNode(splittedList[i]));
+
+            li.setAttribute("class", "done-item");
+            // append complete li to ul
+            doneList.appendChild(li);
         }
     })();
 
@@ -90,6 +110,8 @@ window.onload = function(){
         taskList.push(text);
         //store array to a local storage called tasks
         window.localStorage.setItem("tasks", taskList);
+
+        inputText.value = "";
     }
 
 
@@ -130,10 +152,41 @@ window.onload = function(){
             var splittedList = taskList[0].split(re);
             taskList = splittedList;
 
-            for(var i = 0; i < splittedList.length; i++){
-                console.log("i = " + i);
-
+            for(var i = 0; i < taskList.length; i++){
                 if(this.classList.contains(`delete-${i}`)){  
+                    toDoList.removeChild(toDoList.children[i]);
+                    taskList.splice(i, 1);
+                    window.localStorage.setItem("tasks", taskList);
+                    return;
+                }
+            }
+        } else {
+            return;
+        }
+    }
+
+    function makeDone(){
+        if (confirm('Mark as done?')) {
+            var re = /\s*,\s*/;
+            var re2 = /\s*<\s*/;
+            var splittedList = taskList[0].split(re);
+            // get the tasks list
+            taskList = splittedList;
+
+            for(var i = 0; i < taskList.length; i++){
+                if(this.classList.contains(`done-${i}`)){  
+                    var li = document.createElement("li");
+                    let text = toDoList.children[i].innerHTML.split(re2)[0] + " " + new Date();
+                    li.appendChild(document.createTextNode(text));
+                    li.setAttribute("class", "done-item");
+            
+                    // append complete li to ul
+                    doneList.appendChild(li);
+                    // push task to array
+                    doneToDoList.push(text);
+                    //store array to a local storage called tasks
+                    window.localStorage.setItem("doneTasks", doneToDoList);
+                  
                     toDoList.removeChild(toDoList.children[i]);
                     taskList.splice(i, 1);
                     window.localStorage.setItem("tasks", taskList);
@@ -141,20 +194,8 @@ window.onload = function(){
                     return;
                 }
             }
-        } else {
-            // Do nothing
-            return;
-        }
+            
+        } 
     }
 
-    function makeDone(){
-        if (confirm('Mark as done?')) {
-            
-            
-        } else {
-            // Do nothing
-            return;
-        }
-    }
-
-}
+} 
